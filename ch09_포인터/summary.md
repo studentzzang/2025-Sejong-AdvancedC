@@ -94,3 +94,162 @@ printf("%p %d", p, p[0]);
 포인터 연산에 +,- 뿐 아니라 ++와 --, +=, -=도 가능<br>
 예를 들어 ++p는 p[1]의 주소값<br>
 *(p++) 는 p[1]의 요소값 출력
+
+ex)
+```
+int ar[5] = {1,2,3,4,5};
+
+int i;
+int *p=ar;
+
+for (i=0; i<5; i++) {
+    printf("ar[%d] = %d\n", i, *p++); // 이렇게 가능
+}
+
+return 0;
+```
+
+** 주소 비교 **
+주소는 비교연산자 `(==, !=, < >) 등` 사용하여 비교 가능
+
+ex)
+```mermaid
+int ar[3] = {2,3,5}, *p1 = &ar[1], *p2 = &ar[2];
+printf("%d\n", p1 < p2);
+printf("%d\n", p1 > p2);
+```
+출력결과
+```mermaid
+1
+0
+```
+- 주소 끼리 정수 더하기 빼기만 가능 하며 실수 연산, 곱하기, 나누기는 안 된다.(컴파일 에러)
+
+### 9.5 포인터 인자와 주소 변환
+
+**포인터 인자**
+함수 매개변수가 포인터 변수 (int *p)면 인수는 &a 이런식
+
+```mermaid
+#include <stdio.h>
+
+void change(int *p);
+
+int main() {
+
+    int a = 5;
+
+    change(&a);
+
+    printf("a = %d", a);
+
+    return 0;
+}
+
+void change(int *p){
+    *p=100;
+}
+```
+출력결과
+```mermaid
+a = 100
+```
+** ?이렇게 쓰는 이유**
+보통 int, float같은 매개변수를 넣는 것을 `값에 의한 호출` 이라고 함. <br>
+위처럼 주소를 전달하는 것을 `주소에 의한 호출`<br>
+`주소에 의한 호출`은 다른 함수에서 변수의 값에 영향을 줄 수 있음. <br>
+
+만약 위 코드에서 포인터가 매개변수가 아닌 그냥 int값이 매개변수 였다면
+
+```mermaid
+#include <stdio.h>
+
+void change(int p);
+
+int main() {
+
+    int a = 5;
+
+    change(a);
+
+    printf("a = %d", a);
+
+    return 0;
+}
+
+void change(int p){
+    p=100;
+}
+```
+출력결과
+```mermaid
+a = 5
+```
+
+아래 코드는 어떨까?
+```mermaid
+#include <stdio.h>
+
+void change(int *p);
+
+int main() {
+
+    int a = 3;
+    int *pa = &a;
+
+    change(pa);
+
+    printf("a = %d", a);
+
+    return 0;
+}
+
+void change(int *p){
+    *p=10;
+}
+```
+출력결과
+```mermaid
+a = 10
+```
+***포인터에 대입되는 것은 하나의 값이 아닌 그저 주소를 가리키는 주소 번지를 저장 할 뿐
+이라고 이해하면 편할 것 같다.***
+
+- scanf() 함수에 값을 전달할 때 주소연산자(&)를 붙이는 이유가 값 자체를 바꾸기 위해서임.
+- printf() 에 일반적으로 값만 전달하지만 주소를 출력하려면 주소연산자(&)를 붙어야됨.
+
+**주소 반환 함수+연습예제**
+- 주소 반환 함수는 선언할때 int *p(매개변수) ... 이런식으로 해주면 된다.
+* 두 정수 변수의 주소를 받아 '값'이 작은 변수의 '주소 반환'하는 smaller 함수를 작성
+```mermaid
+#include <stdio.h>
+
+int *smaller(int *p1, int *p2);
+
+int main(){
+
+    int ar[3] = {1,3,-4};
+
+    int *big1 = smaller(ar, ar+1);
+    int *big2 = smaller(ar, ar+2);
+    printf("%p / %d\n", big1, *big1);
+    printf("%p / %d", big2, *big2);
+
+    return 0;
+}
+
+int *smaller(int *p1, int *p2){
+    if(*p1 > *p2){
+        return p1;
+    }
+    else{
+        return p2;
+    }
+}
+```
+출력결과
+```mermaid
+0x7ffc74200570 / 3
+0x7ffc7420056c / 1
+```
+* smaller함수에서 삼항연산자로 한줄에 하려 했는데 에러남
