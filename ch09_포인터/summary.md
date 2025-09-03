@@ -64,14 +64,14 @@ pp1E40B8 3
 그래서 괄호 꼭
 
 - 반대로 배열이 대입된 포인터를 배열처럼 사용 가능
-```mermaid
+```
 int ar[3] = {3,7,5};
 int *p =ar;
 printf("%d\n", p[1]); // 7 출력
 ```
 
 **정리** <br>
-```mermaid
+```
 int ar[5], *p = ar;
 
 i번째 원소의 주소: &ar[i] = ar+i = p+i = &p[i]
@@ -80,7 +80,7 @@ i번재 원소의 값: ar[i] = *(ar+i) = *(p+i) = p[i]
 **포인터 배열 - 인덱스**
 
 포인터에 배열의 중간 요소의 주소를 넣어도 됨. 인덱스 0 아닌것.
-```mermaid
+```
 int ar[5] = {2,3,5,7,-1}
 int *p = &ar[2]; // ar 인덱스2 값의 주소 들어감
 
@@ -113,13 +113,13 @@ return 0;
 주소는 비교연산자 `(==, !=, < >) 등` 사용하여 비교 가능
 
 ex)
-```mermaid
+```
 int ar[3] = {2,3,5}, *p1 = &ar[1], *p2 = &ar[2];
 printf("%d\n", p1 < p2);
 printf("%d\n", p1 > p2);
 ```
 출력결과
-```mermaid
+```
 1
 0
 ```
@@ -130,7 +130,7 @@ printf("%d\n", p1 > p2);
 **포인터 인자**
 함수 매개변수가 포인터 변수 (int *p)면 인수는 &a 이런식
 
-```mermaid
+```
 #include <stdio.h>
 
 void change(int *p);
@@ -151,7 +151,7 @@ void change(int *p){
 }
 ```
 출력결과
-```mermaid
+```
 a = 100
 ```
 ** ?이렇게 쓰는 이유**
@@ -161,7 +161,7 @@ a = 100
 
 만약 위 코드에서 포인터가 매개변수가 아닌 그냥 int값이 매개변수 였다면
 
-```mermaid
+```
 #include <stdio.h>
 
 void change(int p);
@@ -182,12 +182,12 @@ void change(int p){
 }
 ```
 출력결과
-```mermaid
+```
 a = 5
 ```
 
 아래 코드는 어떨까?
-```mermaid
+```
 #include <stdio.h>
 
 void change(int *p);
@@ -209,7 +209,7 @@ void change(int *p){
 }
 ```
 출력결과
-```mermaid
+```
 a = 10
 ```
 ***포인터에 대입되는 것은 하나의 값이 아닌 그저 주소를 가리키는 주소 번지를 저장 할 뿐
@@ -221,7 +221,7 @@ a = 10
 **주소 반환 함수+연습예제**
 - 주소 반환 함수는 선언할때 int *p(매개변수) ... 이런식으로 해주면 된다.
 * 두 정수 변수의 주소를 받아 '값'이 작은 변수의 '주소 반환'하는 smaller 함수를 작성
-```mermaid
+```
 #include <stdio.h>
 
 int *smaller(int *p1, int *p2);
@@ -248,7 +248,7 @@ int *smaller(int *p1, int *p2){
 }
 ```
 출력결과
-```mermaid
+```
 0x7ffc74200570 / 3
 0x7ffc7420056c / 1
 ```
